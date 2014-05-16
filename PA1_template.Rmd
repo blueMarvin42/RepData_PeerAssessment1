@@ -2,8 +2,13 @@
 
 
 ## Loading and preprocessing the data
-
-
+### the current working directory is where the dataset is
+```{r}
+unzip("activity.zip")
+data<-read.csv("activity.csv")
+data$date<-as.Date(data$date)
+data$interval<-factor(data$interval)
+```
 
 ## What is mean total number of steps taken per day?
 
