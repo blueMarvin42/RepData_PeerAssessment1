@@ -64,7 +64,7 @@ AstepInt <- ddply(data, .(interval), summarize, mean = mean(steps, na.rm = TRUE)
 ### Time series plot: which 5-min interval has the maximum average steps
 
 ```r
-timeplot <- ggplot(AstepInt, aes(x = interval, y = mean)) + geom_line() +
+timeplot <- ggplot(AstepInt, aes(x = interval, y = mean)) + geom_line() + 
 labs(title = "Average number of steps  across all day at each 5-min interval", 
     y = "Average number of steps") + ##### annotate the plot
 geom_vline(aes(xintercept = AstepInt[which.max(AstepInt$mean), 1]), colour = "blue") + 
@@ -99,7 +99,7 @@ sum(is.na(data$steps) == T)
 imputedata <- data[is.na(data$steps) == T, ]
 ```
 
-#### Then impute missing data
+#### Then impute missing data with mean of corresponding 5-min intervals. Dataset AstepInt (created by previous step) contains average steps for each 5-min interval, so just use it to substitute the missing values for each date that contains missing data. 
 
 ```r
 for (i in imputedata$date) {
@@ -113,7 +113,7 @@ for (i in imputedata$date) {
 newdata <- rbind(data[is.na(data$steps) == F, ], imputedata)
 ```
 
-### Histogram of the total number of steps taken each day with new dataset
+### Histogram of the total number of steps taken each day using new dataset
 
 ```r
 TstepAday2 <- ddply(newdata, .(date), summarize, total = sum(steps))
@@ -150,7 +150,7 @@ median(TstepAday2$total)
 
 
 ### Conclusion
-With imputed data, mean and median of the total number of steps per day are the same. Compared to previous results (with missing data), means stay the same, but median slightly change.
+With imputed data, mean and median of the total number of steps per day are the same. Compared to previous results (with missing data), means stay the same, but median slightly changes.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -181,7 +181,6 @@ print(timeplot2)
 ```
 
 ![plot of chunk timeplot2](figure/timeplot2.png) 
-
 
 
 

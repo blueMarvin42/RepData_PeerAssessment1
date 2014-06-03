@@ -66,7 +66,7 @@ sum(is.na(data$steps)==T)
 ```{r}
 imputedata<-data[is.na(data$steps)==T,]
 ```
-#### Then impute missing data
+#### Then impute missing data with mean of corresponding 5-min intervals. Dataset AstepInt (created by previous step) contains average steps for each 5-min interval, so just use it to substitute the missing values for each date that contains missing data. 
 ```{r}
 for (i in imputedata$date) {imputedata[imputedata$date==i,][,1]<-AstepInt[,2]}
 ```
@@ -74,7 +74,7 @@ for (i in imputedata$date) {imputedata[imputedata$date==i,][,1]<-AstepInt[,2]}
 ```{r}
 newdata<-rbind(data[is.na(data$steps)==F,],imputedata)
 ```
-### Histogram of the total number of steps taken each day with new dataset
+### Histogram of the total number of steps taken each day using new dataset
 ```{r}
 TstepAday2<-ddply(newdata,.(date),summarize,total=sum(steps))
 ```{r histogram2, fig.width=7, fig.height=6}
@@ -91,7 +91,7 @@ median(TstepAday2$total)
 ```
 
 ### Conclusion
-With imputed data, mean and median of the total number of steps per day are the same. Compared to previous results (with missing data), means stay the same, but median slightly change.
+With imputed data, mean and median of the total number of steps per day are the same. Compared to previous results (with missing data), means stay the same, but median slightly changes.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?

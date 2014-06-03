@@ -278,7 +278,7 @@ print(timeplot)
 <pre><code class="r">imputedata &lt;- data[is.na(data$steps) == T, ]
 </code></pre>
 
-<h4>Then impute missing data</h4>
+<h4>Then impute missing data with mean of corresponding 5-min intervals. Dataset AstepInt (created by previous step) contains average steps for each 5-min interval, so just use it to substitute the missing values for each date that contains missing data.</h4>
 
 <pre><code class="r">for (i in imputedata$date) {
     imputedata[imputedata$date == i, ][, 1] &lt;- AstepInt[, 2]
@@ -290,7 +290,7 @@ print(timeplot)
 <pre><code class="r">newdata &lt;- rbind(data[is.na(data$steps) == F, ], imputedata)
 </code></pre>
 
-<h3>Histogram of the total number of steps taken each day with new dataset</h3>
+<h3>Histogram of the total number of steps taken each day using new dataset</h3>
 
 <pre><code class="r">TstepAday2 &lt;- ddply(newdata, .(date), summarize, total = sum(steps))
 </code></pre>
@@ -321,7 +321,7 @@ print(hist)
 
 <h3>Conclusion</h3>
 
-<p>With imputed data, mean and median of the total number of steps per day are the same. Compared to previous results (with missing data), means stay the same, but median slightly change.</p>
+<p>With imputed data, mean and median of the total number of steps per day are the same. Compared to previous results (with missing data), means stay the same, but median slightly changes.</p>
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
